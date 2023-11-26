@@ -1,0 +1,21 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://192.168.49.2:31112
+functions:
+  facerecognition:
+    lang: python3-debian
+    handler: ./face_recognition
+    image: mzamora1/face_recognition:latest
+    build_args:
+      ADDITIONAL_PACKAGE: ffmpeg iputils-ping -y
+    environment:
+      AWS_ENDPOINT_URL_S3: http://192.168.49.1:80
+      AWS_DEFAULT_REGION: us-east-1
+    secrets:
+      - s3-access-key-id
+      - s3-secret-key
+      - aws-access-key-id
+      - aws-secret-key
+    
+    
